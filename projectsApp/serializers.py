@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from projects.models import Projects
+from projectsApp.models import Projects
 
 class ProjectsSerializer(serializers.ModelSerializer):
     class Meta:
