@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles', 
     'rest_framework',
     'corsheaders',
+    'projects.apps.ProjectsConfig'
+
 ]
 
 MIDDLEWARE = [
@@ -83,10 +85,15 @@ CORS_ALLOWED_ORIGINS = [
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': False,
+        "NAME":"project-management-db",
+        "CLIENT": {
+            "host":"mongodb+srv://stanleywan2:kheBbTQqHjn2SUhd@cluster0.spizp.mongodb.net/?retryWrites=true&w=majority",
+        }
     }
 }
+
 
 
 # Password validation
