@@ -20,5 +20,5 @@ def add_project(request):
     new_project_serializer = ProjectsSerializer(data=new_project_data)
     if new_project_serializer.is_valid():
         new_project_serializer.save()
-        return JsonResponse("Add Successfully", safe=False)
-    return JsonResponse("Failed to Add", safe=False)
+        return JsonResponse({'status':'success'}, safe=False)
+    return JsonResponse({'status':'failed'}, safe=False)

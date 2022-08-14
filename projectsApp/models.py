@@ -7,6 +7,8 @@ class Projects(models.Model):
     project_title = models.CharField(max_length=50)
     project_description = models.CharField(max_length=225)
     project_progress = models.CharField(max_length=50)
-    create_by = models.CharField(max_length=50)
-    create_at = models.DateTimeField(auto_now_add=True)
+    project_priority = models.CharField(max_length=50, null=True)
+    created_by = models.CharField(max_length=50, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+   
