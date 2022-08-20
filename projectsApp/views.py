@@ -1,3 +1,4 @@
+from functools import partial
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -29,9 +30,22 @@ def updated_project(request, pk):
     try: 
         get_project = Projects.objects.get(id=pk)
     except Projects.DoesNotExist: 
-        return JsonResponse({'message': 'The tutorial does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+        return JsonResponse({'message': 'The project does not exist'}, status=status.HTTP_404_NOT_FOUND) 
     updated_project_data = JSONParser().parse(request)
     updated_project_serializer = ProjectsSerializer(get_project, data=updated_project_data)
+    if updated_project_serializer.is_valid():
+        updated_project_serializer.save()
+        return JsonResponse ({'status':'success'}, safe=False)
+    return JsonResponse({'status':'failed'}, safe=False)
+
+@api_view(['PUT'])
+def updated_drag_project(request, pk):
+    try:
+        get_project = Projects.objects.get(id=pk)
+    except Projects.DoesNotExist:
+        return JsonResponse({'message': 'The project does not exist'}, status=status.HTTP_404_NOT_FOUND) 
+    updated_project_data = JSONParser().parse(request)
+    updated_project_serializer = ProjectsSerializer(get_project, data={'project_progress':updated_project_data}, partial=True)
     if updated_project_serializer.is_valid():
         updated_project_serializer.save()
         return JsonResponse ({'status':'success'}, safe=False)
