@@ -50,3 +50,12 @@ def updated_drag_project(request, pk):
         updated_project_serializer.save()
         return JsonResponse ({'status':'success'}, safe=False)
     return JsonResponse({'status':'failed'}, safe=False)
+
+@api_view(['DELETE'])
+def delete_project(request, pk):
+    try:
+        get_project = Projects.objects.get(id=pk)
+    except Projects.DoesNotExist:
+        return JsonResponse({'message': 'The project does not exist'}, status=status.HTTP_404_NOT_FOUND)
+    get_project.delete()
+    return JsonResponse({'status':'success'}, safe=False)
