@@ -1,0 +1,7 @@
+version: "3.9"
+services:
+  django:
+    image: project-management-backend
+    build: .
+    ports:
+      - "8000:8000"
