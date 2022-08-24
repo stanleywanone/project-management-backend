@@ -3,7 +3,7 @@ import uuid
 
 # Create your models here.
 class Projects(models.Model):
-    id = models.CharField(primary_key=True,  max_length=225)
+    id = models.UUIDField(primary_key=True,  max_length=225)
     project_title = models.CharField(max_length=225)
     project_description = models.CharField(max_length=225)
     project_progress = models.CharField(max_length=225)
