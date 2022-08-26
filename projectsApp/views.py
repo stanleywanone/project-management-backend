@@ -11,10 +11,11 @@ from rest_framework import status
 # Create your views here.
 @api_view(['GET'])
 def get_projects(request):
-    projects = Projects.objects.all()
-    projects_serializer = ProjectsSerializer(projects, many=True)
+    # projects = Projects.objects.all()
+    # projects_serializer = ProjectsSerializer(projects, many=True)
 
-    return JsonResponse(projects_serializer.data, safe=False)
+    # return JsonResponse(projects_serializer.data, safe=False)
+    return  Response("You Got me")
 
 @api_view(['POST'])
 def add_project(request):
