@@ -1,32 +1,19 @@
-name: Project-Management django server
-
 on:
   push:
-    branches: [main]
+    branches: "main"
 
 jobs:
-  build:
+  heroku_git_deploy_job:
     runs-on: ubuntu-latest
+    name: Git Deploy job- A job to deploy django app to heroku using git
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v2
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Deploy django to heroku
+        uses: nyakaz73/heroku-django-deploy@v0.68
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-
-      - name: Login to Amazon ECR Private
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push docker image to Amazon ECR
-        env:
-          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          REPOSITORY: project-management-server
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+          heroku_app_name: "pm-django-backend"
+          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
+          heroku_email_address: "stanleywanone@gmail.com"
+          use_git: true
+          git_branch: main

@@ -1,4 +1,4 @@
-#Tells Docker to use the official python 3 image from dockerhub as a base image
+#Tells Docker to use the official python 3 image
 FROM python:3.9
 # Sets an environmental variable that ensures output from python is sent straight to the terminal without buffering it first
 ENV PYTHONUNBUFFERED 1
