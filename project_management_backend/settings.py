@@ -90,7 +90,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'ENFORCE_SCHEMA': False,
-        "NAME":"project-management-db",
+        "NAME":"project-management-db2",
         "CLIENT": {
             "host":"mongodb+srv://stanleywan2:kheBbTQqHjn2SUhd@cluster0.spizp.mongodb.net/?retryWrites=true&w=majority",
         }
