@@ -1,22 +1,29 @@
 from functools import partial
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser
 from projectsApp.models import Projects
 from projectsApp.serializers import ProjectsSerializer
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 # Create your views here.
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_projects(request):
-    projects = Projects.objects.all()
-    projects_serializer = ProjectsSerializer(projects, many=True)
-
-    return JsonResponse(projects_serializer.data, safe=False)
+    try:  
+        projects = Projects.objects.all()
+        projects_serializer = ProjectsSerializer(projects, many=True)
+        return Response({'status':'success', 'data':projects_serializer.data})
+    except:
+        print('no')
+        return Response({'status':401}, status=status.HTTP_401_UNAUTHORIZED)
+  
 
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def add_project(request):
     new_project_data = JSONParser().parse(request)
     new_project_serializer = ProjectsSerializer(data=new_project_data)
@@ -26,6 +33,7 @@ def add_project(request):
     return JsonResponse({'status':'failed'}, safe=False)
 
 @api_view(['PUT'])
+@permission_classes([IsAuthenticated])
 def updated_project(request, pk):
     try: 
         get_project = Projects.objects.get(id=pk)
@@ -39,6 +47,7 @@ def updated_project(request, pk):
     return JsonResponse({'status':'failed'}, safe=False)
 
 @api_view(['PUT'])
+@permission_classes([IsAuthenticated])
 def updated_drag_project(request, pk):
     try:
         get_project = Projects.objects.get(id=pk)
@@ -52,6 +61,7 @@ def updated_drag_project(request, pk):
     return JsonResponse({'status':'failed'}, safe=False)
 
 @api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
 def delete_project(request, pk):
     try:
         get_project = Projects.objects.get(id=pk)
