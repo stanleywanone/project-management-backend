@@ -119,6 +119,8 @@ WSGI_APPLICATION = 'project_management_backend.wsgi.application'
 
 #CORS
 CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3001",
+    "http://127.0.0.1:3001",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
     'https://project-management-pi.vercel.app'

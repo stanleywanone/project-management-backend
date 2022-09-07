@@ -7,6 +7,8 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth import get_user_model
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 # Create your views here.
 
 @api_view(['GET'])
@@ -26,3 +28,17 @@ def create_user(request):
             return Response({'status':'success'},status=status.HTTP_200_OK)
     except:
         return Response({'status':'failed'},status=status.HTTP_400_BAD_REQUEST)
+    
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    @classmethod
+    def get_token(cls, user):
+        token = super().get_token(user)
+
+        # Add custom claims
+        token['username'] = user.username
+        # ...
+
+        return token
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
